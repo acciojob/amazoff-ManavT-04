@@ -20,6 +20,12 @@ public class OrderService {
     }
 
     public void createOrderPartnerPair(String orderId, String partnerId){
+        if(!orderRepository.isOrderExist(orderId)){
+            throw new RuntimeException("OrderId not found");
+        }
+        if(!orderRepository.isPartnerExist(partnerId)){
+            throw new RuntimeException("PartnerId not Found");
+        }
         orderRepository.saveOrderPartnerMap(orderId, partnerId);
     }
 
@@ -29,6 +35,10 @@ public class OrderService {
 
     public DeliveryPartner getPartnerById(String partnerId){
         return orderRepository.findPartnerById(partnerId);
+    }
+
+    public Integer getCountOfUnassignedOrders() {
+        return orderRepository.findCountOfUnassignedOrders();
     }
 
     public Integer getOrderCountByPartnerId(String partnerId){
@@ -49,10 +59,6 @@ public class OrderService {
 
     public void deleteOrder(String orderId){
         orderRepository.deleteOrder(orderId);
-    }
-
-    public Integer getCountOfUnassignedOrders(){
-        return orderRepository.findCountOfUnassignedOrders();
     }
 
     public Integer getOrdersLeftAfterGivenTimeByPartnerId(String time, String partnerId){
