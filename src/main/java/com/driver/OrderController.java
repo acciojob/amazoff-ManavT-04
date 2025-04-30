@@ -21,7 +21,7 @@ public class OrderController {
 
 
     @Autowired
-    OrderService orderService;
+    private OrderService orderService = new OrderService();
 
     @PostMapping("/add-order")
     public ResponseEntity<String> addOrder(@RequestBody Order order){
